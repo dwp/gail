@@ -6,7 +6,7 @@
   
   "scripts": {
     "build": "next build",
-    "start": "cp -r .next/standalone/ ./ && cp -r .next/static/ ./static && node .next/standalone/server.js"
+    "start": "next start"
   },
   "dependencies": {
     "autoprefixer": "10.4.21",
