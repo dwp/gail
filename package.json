@@ -6,7 +6,7 @@
   
   "scripts": {
     "build": "next build",
-    "start": "node .next/standalone/server.js",
+    "start": "node .next/standalone/server.js"
   },
   "dependencies": {
     "autoprefixer": "10.4.21",
@@ -46,5 +46,5 @@
     "ts-node": "10.9.2",
     "typescript": "5.9.3",
     "whatwg-fetch": "3.6.20"
-  },
+  }
 }
