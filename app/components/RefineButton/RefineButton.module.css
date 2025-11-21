@@ -1,0 +1,21 @@
+.govuk_button_inverse {
+  background-color: #ffffff !important;
+  border: 1px #1d70b8 solid !important;
+  color: #1d70b8 !important;
+}
+
+.govuk_button_override {
+  margin-bottom: 0 !important;
+}
+
+.govuk_button_inverse:hover {
+  background-color: #e8f1f8 !important;
+  color: #1d70b8 !important;
+}
+
+.govuk_button_inverse:focus {
+  outline: 3px solid #ffdd00 !important;
+  outline-offset: 0 !important;
+  background-color: #ffdd00 !important;
+  color: black !important;
+}
