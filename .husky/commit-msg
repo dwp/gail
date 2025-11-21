@@ -1,4 +1,0 @@
-npx --no-install commitlint --edit "$1" || {
-  echo "❌ Error: Commit message does not meet the required format. Please use the format: 'feat: description', 'fix: description', all in lowercase. Please visit the docs to know more https://dwpdigital.atlassian.net/wiki/spaces/EN/pages/56700118741/Commit+Message+Standard"
-  exit 1
-}
