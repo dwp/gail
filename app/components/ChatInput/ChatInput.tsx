@@ -3,10 +3,10 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Typing, QueryTextArea } from "@/app/components";
 import { ChatHistoryType, ErrorStateType } from "@/app/types";
-import { sendQuery } from "@/app/utils/api";
 import styles from "./ChatInput.module.css";
 import { getLocation } from "@/app/utils";
 import { useLocation } from "@/app/providers";
+import sendQueryMessage from "@/app/utils/api/sendQueryMessage";
 
 const initialErrorState = {
   invalidchar: false,
@@ -30,13 +30,14 @@ export default function ChatInput({
 }) {
   const [query, setQuery] = useState("");
   const [error, setError] = useState<ErrorStateType>(initialErrorState);
+  const [counter, setCounter] = useState(1);
   const { location } = useLocation();
   const [localLocation, setLocalLocation] = useState("");
 
   const isError = Object.values(error).includes(true);
   const onChange = (
     event?: React.ChangeEvent<HTMLTextAreaElement> | null,
-    plainText?: string | null,
+    plainText?: string | null
   ) => {
     setQuery(plainText ? plainText : event ? event.target.value : "");
     setError((state) => ({ ...state, blank: false }));
@@ -63,31 +64,36 @@ export default function ChatInput({
     }
     if (isError || isModalOpen || query === "") {
       return;
+    }
+    if (typing) {
+      return;
     } else {
       setTyping(true);
       setLoadedChatHistory((state: ChatHistoryType[]) => [
         ...state,
         { question: query },
       ]);
-      sendQuery(query, localLocation).then((history) => {
+      sendQueryMessage(query, localLocation, counter).then((history) => {
         setLoadedChatHistory(history);
         setTyping(false);
       });
       setQuery("");
-      setError(initialErrorState);
+      setCounter((prevCounter) => prevCounter + 1);
     }
   }, [
     query,
     isModalOpen,
-    localLocation,
-    setLoadedChatHistory,
     setTyping,
     isError,
     location,
+    counter,
+    setLoadedChatHistory,
+    localLocation,
+    typing,
   ]);
 
   const submitQueryEnter = (
-    event: React.KeyboardEvent<HTMLTextAreaElement>,
+    event: React.KeyboardEvent<HTMLTextAreaElement>
   ) => {
     if (event.key === "Enter" && event.shiftKey == false) {
       event.preventDefault();

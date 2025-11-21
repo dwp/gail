@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { H4, Button } from "@/app/components";
 import styles from "./Feedback.module.css";
-import { sendFeedback } from "@/app/utils/api";
+// import { sendFeedback } from "@/app/utils/api";
 
 type FeedbackType = "yes" | "no";
 
@@ -25,10 +25,11 @@ export default function Feedback({
     if (type === "no") {
       setIsFeedbackHelpful(type);
     } else {
-      const response = await sendFeedback(messageId, [], "", true);
-      if (response?.id) {
-        setIsFeedbackHelpful(null);
-      }
+      // const response = await sendFeedback(messageId, [], "", true);
+      // if (response?.id) {
+      //   setIsFeedbackHelpful(null);
+      // }
+      setIsFeedbackHelpful(null);
     }
   };
 

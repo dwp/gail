@@ -1,0 +1,24 @@
+# # exit on error
+# set -e
+
+# npm run format || {
+#   echo "❌ Error: Format check failed. Please execute npm run format before committing."
+#   exit 1
+# }
+
+# npm run lint || {
+#   echo "❌ Error: Linting failed. Please fix the issues before committing."
+#   exit 1
+# }
+
+# npm run type-check || {
+#   echo "❌ Error: TypeScript type-checking failed. Please fix the issues before committing."
+#   exit 1
+# }
+
+# npm run test:notest || {
+#   echo "❌ Error: Unit tests failed. Please fix the issues before committing."
+#   exit 1
+# }
+
+git add .

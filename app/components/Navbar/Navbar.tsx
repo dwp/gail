@@ -1,7 +1,7 @@
 "use server";
 
 import { headers } from "next/headers";
-import AdminViewNavigation from "../Packages/AdminViewNavigation/AdminViewNavigation";
+// import AdminViewNavigation from "../Packages/AdminViewNavigation/AdminViewNavigation";
 import Link from "../Packages/Link/Link";
 import styles from "./Navbar.module.css";
 import NavbarClient from "./NavbarClient";
@@ -19,7 +19,11 @@ const NavbarRoutes = [
   },
   {
     label: "Claimant complaints",
-    route: "/chat/history",
+    route: "#",
+  },
+  {
+    label: "Admin",
+    route: "#",
   },
 ];
 
@@ -57,12 +61,12 @@ export default async function Navbar() {
               </Link>
             ))}
 
-            <div
+            {/* <div
               id="admin-view-wrapper"
               style={{ display: isLandingPage ? "none" : "inline" }}
             >
               <AdminViewNavigation className={styles.navbarLink} />
-            </div>
+            </div> */}
           </nav>
         </div>
       </div>

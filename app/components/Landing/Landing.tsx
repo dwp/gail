@@ -12,7 +12,7 @@ import {
 } from "@/app/components";
 import LandingItem from "./LandingItem";
 import styles from "./Landing.module.css";
-import { clearHistory } from "@/app/utils";
+import { clearHistory, clearLocation } from "@/app/utils";
 
 export default function Landing() {
   const router = useRouter();
@@ -24,6 +24,7 @@ export default function Landing() {
    */
   const startChat = () => {
     clearHistory();
+    clearLocation();
     router.push("/chat");
   };
 

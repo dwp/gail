@@ -4,58 +4,40 @@ import {
   calculateIndex,
   updateHistory,
   catchError,
-  filterChatHistory,
+  // filterChatHistory,
 } from "@/app/utils";
-import type { QueryResponseType } from "@/app/types";
-import { getSessionId } from "../storage/storage";
+// import type { QueryResponseType } from "@/app/types";
+// import { getSessionId } from "../storage/storage";
+import { returnPrototypeResponse } from "../prototypeRespones";
 
 export default async function sendQueryMessage(
   query: string,
-  location: string,
+  _location: string,
+  counter: number
 ) {
   // Define chat history object
   let chat_history = loadHistory();
   // Insert the question into session storage
   addHistory({ question: query });
-  const sessionId = getSessionId();
+  // const sessionId = getSessionId();
 
-  const filteredChatHistory = filterChatHistory(chat_history);
+  // const filteredChatHistory = filterChatHistory(chat_history);
 
   // Send query and handle response
   try {
-    const data = await fetch(`/api/query`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "session-id": sessionId,
-      },
-      body: JSON.stringify({
-        query,
-        chat_history: filteredChatHistory,
-        location,
-      }),
-      signal: AbortSignal.timeout(90000),
-    });
-    const parsedResponse: QueryResponseType = await data.json();
-
-    if (parsedResponse.error) {
-      // If the response object includes an error value, then a HTTP error has occured
-      // An error should be thrown which is caught by catchError and handled appropriately
-      throw new Error(parsedResponse.error, {
-        cause: { code: parsedResponse.code },
-      });
-    }
+    const response: any = returnPrototypeResponse(counter);
 
     // Update session storage chat history
     chat_history = loadHistory();
     const index = calculateIndex("query");
     const lastItem = chat_history[index];
+    await new Promise((res) => setTimeout(res, 5000));
     updateHistory({
       ...lastItem,
-      answer: parsedResponse.answer,
-      citations: parsedResponse.citations || [],
-      default_response: parsedResponse.default_response ?? false,
-      id: parsedResponse.id ?? null,
+      answer: response.answer,
+      citations: response.citations || [],
+      default_response: response.default_response ?? false,
+      id: response.id ?? null,
     });
   } catch (error: any) {
     console.log(error);

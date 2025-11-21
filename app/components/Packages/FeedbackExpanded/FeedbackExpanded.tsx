@@ -10,7 +10,7 @@ import {
   FormGroup,
 } from "@/app/components";
 import { options } from "@/app/constants/FeedbackExpanded";
-import { sendFeedback } from "@/app/utils/api";
+// import { sendFeedback } from "@/app/utils/api";
 import styles from "./FeedbackExpanded.module.css";
 
 type FeedbackExpandedProps = {
@@ -35,7 +35,7 @@ export default function FeedbackExpanded({
 
   const handleCheckboxChange = (
     target: EventTarget & HTMLInputElement,
-    op: string,
+    op: string
   ) => {
     setErrorMessage("");
     if (target.checked && !checkboxesSelected.includes(op)) {
@@ -61,18 +61,21 @@ export default function FeedbackExpanded({
     }
     setLoading(true);
     setErrorMessage("");
-    const response = await sendFeedback(
-      messageId,
-      checkboxesSelected,
-      feedbackDetail,
-      false,
-    );
-    if (response?.id) {
+    // const response = await sendFeedback(
+    //   messageId,
+    //   checkboxesSelected,
+    //   feedbackDetail,
+    //   false,
+    // );
+    setTimeout(() => {
       setFeedbackCompleted(true);
       setIsFeedbackHelpful(null);
-    } else {
-      setErrorMessage("We can't save your feedback, please try again later");
-    }
+    }, 3000);
+    // if (response?.id) {
+
+    // } else {
+    //   setErrorMessage("We can't save your feedback, please try again later");
+    // }
     setLoading(false);
   };
 

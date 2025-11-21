@@ -2,7 +2,6 @@
 
 import { ChatHistoryType } from "@/app/types";
 import Answer from "../Answer/Answer";
-import FollowUps from "../FollowUps/FollowUps";
 import { SectionBreak, Paragraph } from "@/app/components";
 import { trimWhitespace } from "@/app/utils";
 import styles from "./Message.module.css";
@@ -60,13 +59,6 @@ export default function Message({
           setLoadedChatHistory={setLoadedChatHistory}
           setTyping={setTyping}
           isView={isView}
-        />
-      )}
-      {message?.generated && (
-        <FollowUps
-          followUpQs={message.followUpQs || []}
-          setLoadedChatHistory={setLoadedChatHistory}
-          setTyping={setTyping}
         />
       )}
       <SectionBreak level="m" visible={false} />
