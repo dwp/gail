@@ -18,7 +18,7 @@ const NavbarRoutes = [
     route: "/accessibility",
   },
   {
-    label: "Claimant complaints",
+    label: "Chat archive",
     route: "#",
   },
   {

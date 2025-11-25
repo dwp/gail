@@ -119,7 +119,7 @@ export function returnPrototypeResponse(counter: number) {
 
   const q1 = {
     answer:
-      "Apologies, we have had a technical issue. Please try again in a few minutes.",
+      "Apologies, I cannot answer your question. Please rephrase or provide more details. If this is not a guidance related question, please refer to resources under Universal Learning.",
     citations: [],
     default_response: false,
     error: true,

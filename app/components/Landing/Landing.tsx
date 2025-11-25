@@ -49,7 +49,7 @@ export default function Landing() {
         />
 
         <LandingItem
-          text="AI-generated summaries may contain errors. You must the Universal
+          text="AI-generated summaries may contain errors. You must use the Universal
           Learning guidance to check they are accurate before acting on them."
         />
 
