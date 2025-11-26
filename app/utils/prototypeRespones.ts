@@ -121,7 +121,7 @@ export function returnPrototypeResponse(counter: number) {
     answer:
       "Apologies, I cannot answer your question. Please rephrase or provide more details. If this is not a guidance related question, please refer to resources under Universal Learning.",
     citations: [],
-    default_response: false,
+    default_response: true,
     error: true,
     type: "error",
     id: 1,

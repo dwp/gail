@@ -14,6 +14,7 @@ import { trimWhitespace, confirmChangeLocation } from "@/app/utils";
 import { ChatHistoryType } from "@/app/types";
 import { createAnswerMarkdownOptions } from "./AnswerMarkdownConfig";
 import styles from "./Answer.module.css";
+import { emitCitations } from "@/app/(pages)/chat/chat-helpers/emitCitations";
 
 type AnswerProps = {
   setLoadedChatHistory: Function;
@@ -35,7 +36,7 @@ export default function Answer({
   const [isFeedbackHelpful, setIsFeedbackHelpful] =
     useState<IsFeedbackHelpful>(null);
   const [feedbackCompleted, setFeedbackCompleted] = useState(
-    message.feedback_given || false,
+    message.feedback_given || false
   );
 
   const { location, setLocation } = useLocation();
@@ -57,6 +58,11 @@ export default function Answer({
   const aiStatement2 = "Check the accuracy against the links suggested.";
 
   const options = createAnswerMarkdownOptions(styles);
+
+  const handleGuidanceLinkClick = () => {
+    toggleSidebar();
+    emitCitations(message.citations);
+  };
 
   return (
     <article
@@ -88,7 +94,7 @@ export default function Answer({
           <Link
             tabIndex={isSidebarVisible ? -1 : 0}
             className={styles.viewGuidanceLink}
-            onClick={() => toggleSidebar()}
+            onClick={handleGuidanceLinkClick}
           >
             View the guidance links
           </Link>

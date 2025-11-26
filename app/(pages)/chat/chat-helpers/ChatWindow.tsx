@@ -6,11 +6,12 @@ import { Message, ChatInput, ChooseCountry } from "@/app/components";
 import { ChatHistoryType } from "@/app/types";
 import styles from "../Chat.module.css";
 import { loadHistory } from "@/app/utils";
+import { emitCitations } from "./emitCitations";
 
 export default function ChatWindow() {
   const [typing, setTyping] = useState(false);
   const [loadedChatHistory, setLoadedChatHistory] = useState<ChatHistoryType[]>(
-    [],
+    []
   );
 
   const { isModalVisible } = useModal();
@@ -28,17 +29,9 @@ export default function ChatWindow() {
   }, []);
 
   const updateSidebar = useCallback(() => {
-    try {
-      const event = new CustomEvent("loadedChatHistoryUpdated", {
-        detail: loadedChatHistory,
-      });
-      window.dispatchEvent(event);
-    } catch (e: any) {
-      console.warn(
-        "Could not dispatch loadedChatHistoryUpdated event",
-        e.message,
-      );
-    }
+    emitCitations(
+      loadedChatHistory[loadedChatHistory.length - 1]?.citations || undefined
+    );
   }, [loadedChatHistory]);
 
   // Notify other components when the loaded chat history changes
