@@ -6,7 +6,8 @@
   
   "scripts": {
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "dev": "next dev"
   },
   "dependencies": {
     "autoprefixer": "10.4.21",
