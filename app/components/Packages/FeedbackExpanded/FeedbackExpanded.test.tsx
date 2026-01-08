@@ -3,11 +3,6 @@ import { fireEvent, render, screen } from "@testing-library/react";
 
 jest.mock("@/app/utils/api", () => ({
   sendQuery: jest.fn().mockResolvedValue([]),
-  summarise: jest.fn().mockResolvedValue([]),
-  elaborate: jest.fn().mockResolvedValue([]),
-  refineQuery: jest.fn().mockResolvedValue([]),
-  generateFollowUps: jest.fn().mockResolvedValue([]),
-  generateFollowUpQs: jest.fn().mockResolvedValue([]),
   sendFeedback: jest.fn().mockResolvedValue({ id: 1 }),
 }));
 

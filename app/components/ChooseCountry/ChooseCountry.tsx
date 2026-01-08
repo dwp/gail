@@ -11,8 +11,6 @@ const message: ChatHistoryType = {
   answer: "Welcome to DWP Ask. To start, select where your claimant lives:",
   type: "chooseCountry",
   default_response: false,
-  refined: false,
-  generated: false,
 };
 
 type ChooseCountryProps = {

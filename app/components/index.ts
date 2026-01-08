@@ -1,6 +1,5 @@
 import Layout from "./Layout/Layout";
 import Modal from "./Packages/Modal/Modal";
-import Sidebar from "./Packages/Sidebar/Sidebar";
 import Message from "./Message/Message";
 import Landing from "./Landing/Landing";
 import Typing from "./Packages/Typing/Typing";
@@ -49,12 +48,12 @@ import AuthWrapper from "./AuthWrapper/AuthWrapper";
 import QuestionTemplates from "./Packages/QuestionTemplates/QuestionTemplates";
 import ChooseCountry from "./ChooseCountry/ChooseCountry";
 import CountryCards from "./ChooseCountry/CountryCards";
+import SourceLink from "./Packages/SourceLink/SourceLink";
 
 export {
   ClearChatModal,
   Layout,
   Modal,
-  Sidebar,
   ChatInput,
   ReturnHomeModal,
   Message,
@@ -104,4 +103,5 @@ export {
   QuestionTemplates,
   ChooseCountry,
   CountryCards,
+  SourceLink,
 };

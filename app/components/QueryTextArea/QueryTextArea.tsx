@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useEffect } from "react";
-import { useResponsive, useSidebar } from "@/app/providers";
+import { useResponsive } from "@/app/providers";
 import { useModal } from "@/app/providers";
 import {
   InputError,
@@ -60,9 +60,8 @@ export default function QueryTextArea({
     onChange(null, templateText);
   };
 
-  const { isSidebarVisible } = useSidebar();
   const { isSmallScreen } = useResponsive();
-  const isDisabled = isModalOpen || (isSidebarVisible && isSmallScreen);
+  const isDisabled = isModalOpen || isSmallScreen;
 
   return (
     <div

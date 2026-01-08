@@ -8,7 +8,7 @@ beforeEach(() => {
 });
 
 // 3 typing dots
-const CHILD_NODES_LENGTH = 3;
+const CHILD_NODES_LENGTH = 4;
 describe("Typing renders correctly", () => {
   it("3 child elements", () => {
     render(<Typing />);

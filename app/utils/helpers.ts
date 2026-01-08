@@ -18,17 +18,14 @@ const HTTPErrorMap: { [key: number]: string } = {
 /**
  * Returns the index of the chat history item that should be updated after a query has been sent
  * For a standard query, the last item in chat history
- * For a refined or follow-up query, the second last item
  *
  * @param type type of query
  * @returns number
  */
-export const calculateIndex = (type: "query" | "refine" | "generate") => {
+export const calculateIndex = (type: "query") => {
   const history = loadHistory();
   if (type === "query") {
     return history.length === 1 ? 0 : history.length - 1;
-  } else if (type === "refine" || type === "generate") {
-    return history.length === 1 ? 0 : history.length - 2;
   }
   return 0;
 };
@@ -76,19 +73,13 @@ export const sanitisePathname = (pathname: string) => {
 };
 
 /**
- * Filters out summarise, elaborate, follow ups, error and defualt responses
+ * Filters out default responses
  * @param chatHistory array of chat history objects
  * @returns filtered array with only user queries and valid answers
  */
 export const filterChatHistory = (chatHistory: QueryResponseType[]) => {
   return chatHistory.filter(
-    (item) =>
-      item.question !== "Summarise" &&
-      item.question !== "Elaborate" &&
-      item.question !== "Generate related follow-up questions" &&
-      item.type !== "error" &&
-      !item.default_response &&
-      item.answer,
+    (item) => item.type !== "error" && !item.default_response && item.answer,
   );
 };
 

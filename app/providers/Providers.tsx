@@ -1,20 +1,20 @@
 "use client";
 
-import SidebarProvider from "./SidebarProvider";
 import { ResponsiveProvider } from "./ResponsiveProvider";
 import { ModalProvider } from "./ModalProvider";
 import LocationProvider from "./LocationProvider";
+import CitationsProvider from "./CitationsProvider";
 
-type AllProvidersProps = {
+type ProvidersProps = {
   children: React.ReactNode;
 };
 
-export default function AllProviders({ children }: AllProvidersProps) {
+export default function Providers({ children }: ProvidersProps) {
   return (
     <ResponsiveProvider>
       <ModalProvider>
         <LocationProvider>
-          <SidebarProvider>{children}</SidebarProvider>
+          <CitationsProvider>{children}</CitationsProvider>
         </LocationProvider>
       </ModalProvider>
     </ResponsiveProvider>

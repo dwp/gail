@@ -1,44 +1,55 @@
-import "@testing-library/jest-dom";
 import React from "react";
-import { render, fireEvent, screen } from "@testing-library/react";
-import AllProviders from "@/app/providers/AllProviders";
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import ChatInput from "./ChatInput";
+import * as locationProvider from "@/app/providers";
+import sendQueryMessage from "@/app/utils/api/sendQueryMessage";
 
-jest.mock("@/app/utils/api", () => ({
-  sendQuery: jest.fn().mockResolvedValue([]),
-  summarise: jest.fn().mockResolvedValue([]),
-  elaborate: jest.fn().mockResolvedValue([]),
-  refineQuery: jest.fn().mockResolvedValue([]),
-  generateFollowUps: jest.fn().mockResolvedValue([]),
-  generateFollowUpQs: jest.fn().mockResolvedValue([]),
+// Mock dependencies
+jest.mock("@/app/components", () => ({
+  Typing: () => <div data-testid="typing">Typing...</div>,
+  QueryTextArea: ({
+    value,
+    onChange,
+    onKeyDown,
+    sendQueryAndClear,
+    error,
+  }: any) => (
+    <div>
+      <textarea
+        data-testid="query-textarea"
+        value={value}
+        onChange={onChange}
+        onKeyDown={onKeyDown}
+      />
+      <button data-testid="send-button" onClick={sendQueryAndClear}>
+        Send
+      </button>
+      {error.blank && (
+        <span data-testid="blank-error">Query cannot be blank</span>
+      )}
+      {error.location && (
+        <span data-testid="location-error">Location required</span>
+      )}
+    </div>
+  ),
 }));
 
-import ChatInput from "./ChatInput";
+jest.mock("@/app/utils/storage/storage", () => ({
+  getLocation: jest.fn().mockReturnValue("test-location"),
+}));
 
-beforeAll(() => {
-  Object.defineProperty(window, "matchMedia", {
-    writable: true,
-    value: jest.fn().mockImplementation((query) => ({
-      matches: false,
-      media: query,
-      onchange: null,
-      addEventListener: jest.fn(),
-      removeEventListener: jest.fn(),
-      addListener: jest.fn(),
-      removeListener: jest.fn(),
-      dispatchEvent: jest.fn(),
-    })),
-  });
-});
+jest.mock("@/app/providers");
+jest.mock("@/app/utils/api/sendQueryMessage");
 
-beforeEach(() => {
-  jest.spyOn(console, "error").mockImplementation(jest.fn());
-  jest.spyOn(console, "log").mockImplementation(jest.fn());
-});
+const mockUseLocation = locationProvider.useLocation as jest.MockedFunction<
+  typeof locationProvider.useLocation
+>;
+const mockSendQueryMessage = sendQueryMessage as jest.MockedFunction<
+  typeof sendQueryMessage
+>;
 
-// Remove the global useState mock as it interferes with component functionality
-
-const TestChatInputProps = {
-  chatHistory: [],
+const mockProps = {
   loadedChatHistory: [],
   setLoadedChatHistory: jest.fn(),
   typing: false,
@@ -46,86 +57,78 @@ const TestChatInputProps = {
   isModalOpen: false,
 };
 
-const TestChatInput = () => {
-  return (
-    <AllProviders>
-      <ChatInput {...TestChatInputProps} />
-    </AllProviders>
-  );
-};
-
-describe("ChatInput renders correctly", () => {
-  it("Text area is in document", () => {
-    render(<TestChatInput />);
-    const textAreaWrapper = screen.getByTestId("chat-input-text-area");
-    expect(textAreaWrapper).toBeInTheDocument();
-  });
-
-  it("Text area to update and enter text", () => {
-    const { getByTestId } = render(<TestChatInput />);
-    const input = getByTestId("chat-window-input");
-
-    fireEvent.change(input, { target: { value: "test input" } });
-    expect((input as HTMLTextAreaElement).value).toBe("test input");
-
-    fireEvent.keyDown(input, { key: "Enter", code: "Enter" });
-  });
-
-  it("Text area to update and enter empty text", () => {
-    const { getByTestId } = render(<TestChatInput />);
-    const input = getByTestId("chat-window-input");
-
-    fireEvent.change(input, { target: { value: "" } });
-    expect((input as HTMLTextAreaElement).value).toBe("");
-
-    fireEvent.keyDown(input, { key: "Enter", code: "Enter" });
-  });
-
-  it("handles sessionStorage location", () => {
-    // Mock sessionStorage
-    const mockGetItem = jest.fn().mockReturnValue("test-location");
-    Object.defineProperty(window, "sessionStorage", {
-      value: {
-        getItem: mockGetItem,
-      },
-      writable: true,
+describe("ChatInput", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    mockUseLocation.mockReturnValue({
+      location: "test-location",
+      setLocation: jest.fn(),
     });
-
-    render(<TestChatInput />);
-    expect(mockGetItem).toHaveBeenCalledWith("location");
+    mockSendQueryMessage.mockResolvedValue([
+      { question: "test", answer: "response" },
+    ]);
   });
 
-  it("handles shift+enter without submitting", () => {
-    const { getByTestId } = render(<TestChatInput />);
-    const input = getByTestId("chat-window-input");
+  it("renders input components", () => {
+    render(<ChatInput {...mockProps} />);
 
-    fireEvent.change(input, { target: { value: "test input" } });
-    fireEvent.keyDown(input, { key: "Enter", code: "Enter", shiftKey: true });
-
-    // Should not clear the input when shift+enter is pressed
-    expect((input as HTMLTextAreaElement).value).toBe("test input");
+    expect(screen.getByTestId("chat-input-text-area")).toBeInTheDocument();
+    expect(screen.getByTestId("query-textarea")).toBeInTheDocument();
+    expect(screen.getByTestId("send-button")).toBeInTheDocument();
   });
 
-  it("handles sendQuery with catch block", () => {
-    const mockSetTyping = jest.fn();
-    const mockSetLoadedChatHistory = jest.fn();
+  it("shows typing indicator when typing is true", () => {
+    render(<ChatInput {...mockProps} typing={true} />);
 
-    render(
-      <AllProviders>
-        <ChatInput
-          loadedChatHistory={[]}
-          setLoadedChatHistory={mockSetLoadedChatHistory}
-          typing={false}
-          setTyping={mockSetTyping}
-          isModalOpen={false}
-        />
-      </AllProviders>,
-    );
+    expect(screen.getByTestId("typing")).toBeInTheDocument();
+  });
 
-    const input = screen.getByTestId("chat-window-input");
-    fireEvent.change(input, { target: { value: "test" } });
-    fireEvent.keyDown(input, { key: "Enter" });
+  it("shows location error when no location is set", async () => {
+    mockUseLocation.mockReturnValue({ location: "", setLocation: jest.fn() });
 
-    expect(mockSetTyping).toHaveBeenCalledWith(true);
+    const user = userEvent.setup();
+    render(<ChatInput {...mockProps} />);
+
+    await user.click(screen.getByTestId("send-button"));
+
+    expect(screen.getByTestId("location-error")).toBeInTheDocument();
+  });
+
+  it("shows blank error for empty query", async () => {
+    const user = userEvent.setup();
+    render(<ChatInput {...mockProps} />);
+
+    await user.click(screen.getByTestId("send-button"));
+
+    expect(screen.getByTestId("blank-error")).toBeInTheDocument();
+  });
+
+  it("sends query on Enter key press", async () => {
+    const user = userEvent.setup();
+
+    render(<ChatInput {...mockProps} />);
+
+    const textarea = screen.getByTestId("query-textarea");
+    await user.type(textarea, "test query");
+    await user.keyboard("{Enter}");
+
+    await waitFor(() => {
+      expect(mockSendQueryMessage).toHaveBeenCalledWith(
+        "test query",
+        "test-location",
+      );
+    });
+  });
+
+  it("prevents sending when modal is open", async () => {
+    const user = userEvent.setup();
+
+    render(<ChatInput {...mockProps} isModalOpen={true} />);
+
+    const textarea = screen.getByTestId("query-textarea");
+    await user.type(textarea, "test query");
+    await user.click(screen.getByTestId("send-button"));
+
+    expect(mockSendQueryMessage).not.toHaveBeenCalled();
   });
 });

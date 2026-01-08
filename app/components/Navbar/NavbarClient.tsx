@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useResponsive, useSidebar } from "@/app/providers";
+import { useResponsive } from "@/app/providers";
 
 type Props = {
   containerId?: string;
@@ -10,7 +10,6 @@ type Props = {
 export default function NavbarClient({
   containerId = "navbar-container",
 }: Props) {
-  const { isSidebarVisible } = useSidebar();
   const { isSmallScreen } = useResponsive();
 
   useEffect(() => {
@@ -22,8 +21,7 @@ export default function NavbarClient({
     const m = window.matchMedia("(max-width: 768px)");
 
     const setTabIndex = () => {
-      // apply the same logic used elsewhere
-      const value = isSidebarVisible && isSmallScreen ? -1 : 0;
+      const value = isSmallScreen ? -1 : 0;
       el.tabIndex = value;
 
       // Also apply to focusable descendants (links, buttons and any element with tabindex)
@@ -34,7 +32,9 @@ export default function NavbarClient({
           // Only set when element is naturally focusable (anchor/button) or already has tabindex
           n.tabIndex = value;
         });
-      } catch {}
+      } catch (e: any) {
+        console.error("Error setting tabIndex in NavbarClient:", e.message);
+      }
     };
 
     setTabIndex();
@@ -49,7 +49,7 @@ export default function NavbarClient({
       window.removeEventListener("resize", onChange);
       m.removeEventListener?.("change", onChange);
     };
-  }, [isSmallScreen, isSidebarVisible, containerId]);
+  }, [isSmallScreen, containerId]);
 
   return null;
 }

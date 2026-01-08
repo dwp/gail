@@ -1,6 +1,6 @@
 import { useResponsive } from "./ResponsiveProvider";
-import { useSidebar } from "./SidebarProvider";
 import { useModal } from "./ModalProvider";
 import { useLocation } from "./LocationProvider";
+import { useCitations } from "./CitationsProvider";
 
-export { useResponsive, useSidebar, useModal, useLocation };
+export { useResponsive, useModal, useLocation, useCitations };

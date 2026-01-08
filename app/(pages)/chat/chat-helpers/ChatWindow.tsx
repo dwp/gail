@@ -1,12 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
-import { useResponsive, useSidebar, useModal } from "@/app/providers";
+import { useEffect, useRef, useState } from "react";
+import { useResponsive, useModal } from "@/app/providers";
 import { Message, ChatInput, ChooseCountry } from "@/app/components";
 import { ChatHistoryType } from "@/app/types";
 import styles from "../Chat.module.css";
 import { loadHistory } from "@/app/utils";
-import { emitCitations } from "./emitCitations";
 
 export default function ChatWindow() {
   const [typing, setTyping] = useState(false);
@@ -15,7 +14,6 @@ export default function ChatWindow() {
   );
 
   const { isModalVisible } = useModal();
-  const { isSidebarVisible } = useSidebar();
   const { isSmallScreen } = useResponsive();
   const isModalOpen = Object.values(isModalVisible).includes(true);
   const messageContainerRef = useRef<HTMLDivElement | null>(null);
@@ -28,20 +26,21 @@ export default function ChatWindow() {
     }
   }, []);
 
-  const updateSidebar = useCallback(() => {
-    emitCitations(
-      loadedChatHistory[loadedChatHistory.length - 1]?.citations || undefined
-    );
-  }, [loadedChatHistory]);
-
-  // Notify other components when the loaded chat history changes
-  useEffect(() => {
-    updateSidebar();
-  }, [updateSidebar, loadedChatHistory]);
-
   useEffect(() => {
     if (messageContainerRef.current && loadedChatHistory.length) {
-      messageContainerRef.current.scrollBy({ top: 350, behavior: "smooth" });
+      // Get the last message article element
+      const lastMessage = messageContainerRef.current.querySelector(
+        'article[data-testid="chat-message"]:last-child'
+      );
+      if (lastMessage) {
+        // Calculate the position of the last message relative to the container
+        const messageTop = (lastMessage as HTMLElement).offsetTop;
+        // Scroll to position the message at the top with a 15px gap
+        messageContainerRef.current.scrollTo({
+          top: messageTop - 15,
+          behavior: "smooth",
+        });
+      }
     }
   }, [loadedChatHistory]);
 
@@ -51,12 +50,9 @@ export default function ChatWindow() {
         className={styles.chatContainer}
         ref={messageContainerRef}
         role="feed"
-        tabIndex={isSidebarVisible && isSmallScreen ? -1 : 0}
+        tabIndex={isSmallScreen ? -1 : 0}
         aria-busy={typing}
       >
-        {isSidebarVisible && (
-          <div className={styles.sidebarOverlay} data-testid="overlay" />
-        )}
         {loadedChatHistory.length === 0 && (
           <ChooseCountry
             setTyping={setTyping}

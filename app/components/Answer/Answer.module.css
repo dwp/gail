@@ -5,7 +5,8 @@
 
 .answer {
   background-color: #f3f2ef;
-  padding: 1rem;
+  padding: 12px;
+  border-radius: 5px;
 }
 
 .answer__text {
@@ -27,27 +28,6 @@
 .markdown_list_item {
   font-size: 19px;
   color: black;
-}
-
-.message_answer_refine_buttons {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-  margin-bottom: 2rem;
-  margin-top: 10px;
-}
-
-.message_answer_refine_buttons_no_margin {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-  margin-bottom: 0;
-  align-items: flex-start;
-  height: fit-content;
-}
-
-.message_answer_refine_buttons button {
-  margin-bottom: 0px !important;
 }
 
 .markdown_span_paragraph {
@@ -91,6 +71,9 @@
 
 .ai_disclaimer_span {
   margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .ai_disclaimer {
@@ -98,12 +81,25 @@
 }
 
 .markdownContainer {
-  margin-top: 15px;
   font-size: 19px;
 }
 
 .viewGuidanceLink {
   display: block !important;
   font-size: 19px !important;
-  margin-top: 10px !important;
+  margin: 15px 0 !important;
+}
+
+.sourceLinksContainer {
+  margin-bottom: 35px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.sourceLink,
+.sourceLink:visited {
+  padding: 5px 0;
+  font-size: 19px;
+  color: var(--govuk-blue-text);
 }

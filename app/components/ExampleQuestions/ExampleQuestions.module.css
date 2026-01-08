@@ -1,0 +1,23 @@
+.exampleContainer {
+  background-color: #f3f2ef;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.exampleQuestionsLabel {
+  font-weight: bold !important;
+}
+
+.exampleContent {
+  margin: 0 auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.exampleGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 1rem;
+}

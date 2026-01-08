@@ -4,12 +4,33 @@ import "@testing-library/jest-dom";
 
 import CountryCards from "../CountryCards";
 import { locations } from "../../Landing/config";
+import Providers from "@/app/providers/Providers";
+
+beforeAll(() => {
+  Object.defineProperty(window, "matchMedia", {
+    writable: true,
+    value: jest.fn().mockImplementation((query) => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      addListener: jest.fn(),
+      removeListener: jest.fn(),
+      dispatchEvent: jest.fn(),
+    })),
+  });
+});
 
 describe("CountryCards", () => {
   it("renders a card for each location and calls handler on click", () => {
     const onClickHandler = jest.fn();
 
-    render(<CountryCards onClickHandler={onClickHandler} />);
+    render(
+      <Providers>
+        <CountryCards onClickHandler={onClickHandler} />
+      </Providers>,
+    );
 
     // All locations should render
     locations.forEach((loc) => {

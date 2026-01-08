@@ -1,14 +1,9 @@
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
-import AllProviders from "@/app/providers/AllProviders";
+import Providers from "@/app/providers/Providers";
 
 jest.mock("@/app/utils/api", () => ({
   sendQuery: jest.fn().mockResolvedValue([]),
-  summarise: jest.fn().mockResolvedValue([]),
-  elaborate: jest.fn().mockResolvedValue([]),
-  refineQuery: jest.fn().mockResolvedValue([]),
-  generateFollowUps: jest.fn().mockResolvedValue([]),
-  generateFollowUpQs: jest.fn().mockResolvedValue([]),
 }));
 
 import Answer from "./Answer";
@@ -37,8 +32,6 @@ beforeAll(() => {
 const ChatHistoryType = {
   question: "Test question",
   answer: "Test answer",
-  refined: false,
-  generated: false,
   id: 1,
 };
 
@@ -46,29 +39,18 @@ const errorMessage = {
   question: "Test question",
   answer:
     "Apologies, we had a technical issue. Please try again in few minutes",
-  refined: false,
-  generated: false,
   type: "error",
   citations: [],
 };
 
-const elaboratedMessage = {
-  question: "Elaborate",
-  answer: "Test elaborate answer",
-  citations: [{ title: "Test", url: "test", chunks: "Test" }],
-  refined: false,
-  generated: false,
-  id: 1,
-};
-
 const TestAnswer = () => (
-  <AllProviders>
+  <Providers>
     <Answer
       message={ChatHistoryType}
       setLoadedChatHistory={() => {}}
       setTyping={() => {}}
     />
-  </AllProviders>
+  </Providers>
 );
 
 describe("Answer renders", () => {
@@ -82,56 +64,17 @@ describe("Answer renders", () => {
 
   it("renders the error message correctly", () => {
     render(
-      <AllProviders>
+      <Providers>
         <Answer
           message={errorMessage}
           setLoadedChatHistory={() => {}}
           setTyping={() => {}}
         />
-      </AllProviders>,
+      </Providers>,
     );
     const errorElement = screen.getByText(
       /Apologies, we had a technical issue/,
     );
     expect(errorElement).toBeInTheDocument();
-  });
-});
-
-describe("useState conditional renders", () => {
-  it("renders AI disclaimer for summarised responses", () => {
-    render(
-      <AllProviders>
-        <Answer
-          message={{
-            question: "Summarise",
-            answer: "Test answer",
-            citations: [{ title: "Test", url: "test", chunks: "Test" }],
-            refined: false,
-            generated: false,
-            id: 1,
-          }}
-          setLoadedChatHistory={() => {}}
-          setTyping={() => {}}
-        />
-      </AllProviders>,
-    );
-
-    const disclaimer = screen.getByTestId("ai-answer-disclaimer");
-    expect(disclaimer).toHaveTextContent("AI created a shorter response");
-  });
-
-  it("renders AI disclaimer for elaborated responses", () => {
-    render(
-      <AllProviders>
-        <Answer
-          message={elaboratedMessage}
-          setLoadedChatHistory={() => {}}
-          setTyping={() => {}}
-        />
-      </AllProviders>,
-    );
-
-    const disclaimer = screen.getByTestId("ai-answer-disclaimer");
-    expect(disclaimer).toHaveTextContent("AI created a more detailed response");
   });
 });

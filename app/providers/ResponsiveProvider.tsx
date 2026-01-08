@@ -7,13 +7,13 @@ import React, {
   useState,
 } from "react";
 
-type ResponsiveContext = {
+type ResponsiveContextType = {
   isSmallScreen: boolean;
   width: number;
   height: number;
 };
 
-const ResponsiveContext = createContext<ResponsiveContext | undefined>(
+const ResponsiveContext = createContext<ResponsiveContextType | undefined>(
   undefined,
 );
 

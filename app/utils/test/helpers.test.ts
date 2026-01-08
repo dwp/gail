@@ -53,29 +53,6 @@ describe("calculateIndex", () => {
     expect(calculateIndex("query")).toBe(2);
   });
 
-  it("should return 0 when history length is 1 and type is refine", () => {
-    (loadHistory as jest.Mock).mockReturnValue([{ question: "Test" }]);
-    expect(calculateIndex("refine")).toBe(0);
-  });
-
-  it("should return length - 2 when history length > 1 and type is refine", () => {
-    (loadHistory as jest.Mock).mockReturnValue([
-      { question: "Test1" },
-      { question: "Test2" },
-      { question: "Test3" },
-    ]);
-    expect(calculateIndex("refine")).toBe(1);
-  });
-
-  it("should return length - 2 when history length > 1 and type is generate", () => {
-    (loadHistory as jest.Mock).mockReturnValue([
-      { question: "Test1" },
-      { question: "Test2" },
-      { question: "Test3" },
-    ]);
-    expect(calculateIndex("generate")).toBe(1);
-  });
-
   it("should return 0 for unknown type", () => {
     (loadHistory as jest.Mock).mockReturnValue([
       { question: "Test1" },
@@ -170,13 +147,6 @@ describe("sanitisePathname", () => {
 describe("filterChatHistory", () => {
   const mockChatHistory: MockQueryResponseType[] = [
     { question: "Normal question", answer: "Normal answer", type: "query" },
-    { question: "Summarise", answer: "Summary", type: "query" },
-    { question: "Elaborate", answer: "Elaboration", type: "query" },
-    {
-      question: "Generate related follow-up questions",
-      answer: "Questions",
-      type: "query",
-    },
     { question: "Error question", answer: "Error answer", type: "error" },
     { question: "No answer", answer: "", type: "query" },
   ];

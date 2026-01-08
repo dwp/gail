@@ -8,7 +8,7 @@ import {
 } from "@/app/utils";
 // import type { QueryResponseType } from "@/app/types";
 // import { getSessionId } from "../storage/storage";
-import { returnPrototypeResponse } from "../prototypeRespones";
+import { returnPrototypeResponse } from "../prototypeResponses";
 
 export default async function sendQueryMessage(
   query: string,

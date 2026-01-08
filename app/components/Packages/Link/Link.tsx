@@ -3,7 +3,7 @@
 import NextLink from "next/link";
 import styles from "./Link.module.css";
 
-type Link = Readonly<{
+type LinkType = Readonly<{
   children: React.ReactNode;
   href?: string;
   target?: string;
@@ -44,7 +44,7 @@ export default function Link({
   onKeyDown,
   onClick,
   ...props
-}: Link) {
+}: LinkType) {
   const ariaLabel = props["aria-label"];
   const ariaHidden = props["aria-hidden"];
   const dataTest = props["data-testid"];

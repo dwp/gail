@@ -4,6 +4,10 @@
   padding: 20px;
 }
 
+.feedbackExpandedContainer govuk-form-group {
+  margin-bottom: none !important;
+}
+
 .feedbackExpanded__textarea_container {
   display: flex;
   flex-direction: column;

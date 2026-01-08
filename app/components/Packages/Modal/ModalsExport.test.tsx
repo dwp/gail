@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
-import AllProviders from "@/app/providers/AllProviders";
+import Providers from "@/app/providers/Providers";
 
 beforeAll(() => {
   Object.defineProperty(window, "matchMedia", {
@@ -20,11 +20,6 @@ beforeAll(() => {
 
 jest.mock("@/app/utils/api", () => ({
   sendQuery: jest.fn().mockResolvedValue([]),
-  summarise: jest.fn().mockResolvedValue([]),
-  elaborate: jest.fn().mockResolvedValue([]),
-  refineQuery: jest.fn().mockResolvedValue([]),
-  generateFollowUps: jest.fn().mockResolvedValue([]),
-  generateFollowUpQs: jest.fn().mockResolvedValue([]),
 }));
 
 import { ReturnHomeModal, ClearChatModal } from "./ModalsExport";
@@ -43,9 +38,9 @@ jest.mock("next/navigation", () => ({
 describe("ReturnHomeModal", () => {
   it("renders correctly", () => {
     render(
-      <AllProviders>
+      <Providers>
         <ReturnHomeModal />
-      </AllProviders>,
+      </Providers>,
     );
     const modal = screen.getByTestId("modal-container");
     expect(modal).toBeInTheDocument();
@@ -55,9 +50,9 @@ describe("ReturnHomeModal", () => {
 describe("ClearChatModal", () => {
   it("renders correctly", () => {
     render(
-      <AllProviders>
+      <Providers>
         <ClearChatModal />
-      </AllProviders>,
+      </Providers>,
     );
     const modal = screen.getByTestId("modal-container");
     expect(modal).toBeInTheDocument();

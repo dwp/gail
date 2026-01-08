@@ -44,7 +44,7 @@ describe("Layout (server) component", () => {
     const container = screen.getByTestId("app-container");
     expect(container).toBeInTheDocument();
 
-    // Layout should render client, header and modals (we mocked these)
+    // Layout should render client, header and modals
     expect(screen.getByTestId("layout-client")).toBeInTheDocument();
     expect(screen.getByTestId("header")).toBeInTheDocument();
     expect(screen.getByTestId("layout-modals")).toBeInTheDocument();

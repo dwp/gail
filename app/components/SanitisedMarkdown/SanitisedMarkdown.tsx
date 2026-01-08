@@ -22,10 +22,6 @@ export default function SanitisedMarkdown({
 }: SanitisedMarkdownProps) {
   const dataTestId = props["data-testid"] ?? "sanitised-markdown";
 
-  // DOMPurify exports a factory. In browser/runtime we must call it with
-  // the window to get an instance that exposes `sanitize`. During SSR or
-  // in some test environments `window`/`sessionStorage` may be undefined,
-  // so provide a safe fallback that returns the raw string.
   const purify =
     typeof window !== "undefined"
       ? createDOMPurify(window as any)

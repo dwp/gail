@@ -1,18 +1,13 @@
 .chatWrapper {
   overflow: hidden;
   width: 100%;
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 0;
-  align-items: start;
   min-height: 100%;
 }
 
 .chatWindow {
-  flex: none;
-  width: auto;
-  max-width: none;
-  margin: 0;
+  width: 70%;
+  max-width: 100%;
+  margin: 0 auto;
   padding: 1em 2em;
   display: flex;
   flex-direction: column;
@@ -92,24 +87,6 @@
 
   .chatWindow {
     padding: 1em;
-  }
-
-  .sidebarOverlay {
-    pointer-events: none;
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 100;
-    background-color: rgba(0, 0, 0, 0.85);
-    animation: overlayFadeIn var(--time-in) ease-in-out;
-  }
-}
-
-@media screen and (max-width: 640px) {
-  .sidebarOverlay {
-    display: none;
   }
 }
 

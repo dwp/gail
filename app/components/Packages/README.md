@@ -278,22 +278,6 @@ none;
 
 This component does not return any HTML/TSX/JSX. It is used for route authentication and runs on every render of a new page/screen. The condition for route pushing back to the home/landing/login page can be changed within the component.
 
-### Sidebar
-
-#### Props
-
-```typescript
-backlinkLabel: string;
-backlinkAction: Function;
-dropdownLabel?: string;
-dropdownOptions?: string[];
-dropdownChangeHandler?: Function;
-buttonLabel: string;
-buttonAction: Function;
-```
-
-This component renders a GDS grey (#f3f2f1) sidebar which displays a Backlink component at the top, an optional dropdown in the middle, and a button at the bottom.
-
 ### Typing
 
 #### Props

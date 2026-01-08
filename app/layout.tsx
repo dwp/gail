@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import { SkipLink, Layout } from "./components";
-import AllProviders from "./providers/AllProviders";
+import Providers from "./providers/Providers";
 import "./globals.css";
 import "./index.scss";
 
@@ -26,6 +26,16 @@ export default function RootLayout({
             style={{ display: "none", visibility: "hidden" }}
           ></iframe>
         </noscript>
+        {/* Google Tag Manager (noscript) HEROKU */}
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-53V37X4L"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          ></iframe>
+        </noscript>
+        {/* End Google Tag Manager (noscript) HEROKU */}
         <Script strategy="afterInteractive" id="g-analytics">
           {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -33,10 +43,10 @@ export default function RootLayout({
         'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
         })(window,document,'script','dataLayer','GTM-PTF5XGF5');`}
         </Script>
-        <AllProviders>
+        <Providers>
           <SkipLink />
           <Layout>{children}</Layout>
-        </AllProviders>
+        </Providers>
       </body>
     </html>
   );

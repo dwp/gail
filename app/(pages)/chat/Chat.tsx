@@ -1,4 +1,3 @@
-import SidebarWrapper from "@/app/components/Packages/Sidebar/SidebarWrapper";
 import { Analytics } from "../../components";
 import ChatWindow from "./chat-helpers/ChatWindow";
 import styles from "./Chat.module.css";
@@ -11,8 +10,6 @@ export default async function Chat() {
       <div className={styles.chatWindow}>
         <ChatWindow />
       </div>
-
-      <SidebarWrapper />
     </div>
   );
 }

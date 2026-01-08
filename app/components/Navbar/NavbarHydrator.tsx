@@ -25,7 +25,9 @@ export default function NavbarHydrator() {
       if (headerContainer) {
         headerContainer.style.display = isLandingPage ? "none" : "";
       }
-    } catch {}
+    } catch (e: any) {
+      console.error("Error in NavbarHydrator:", e.message);
+    }
   }, [isLandingPage, isAgreementPage]);
 
   return null;

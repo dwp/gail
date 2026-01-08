@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import QueryTextArea from "./QueryTextArea";
-import AllProviders from "@/app/providers/AllProviders";
+import Providers from "@/app/providers/Providers";
 
 beforeAll(() => {
   Object.defineProperty(window, "matchMedia", {
@@ -21,11 +21,6 @@ beforeAll(() => {
 
 jest.mock("@/app/utils/api", () => ({
   sendQuery: jest.fn().mockResolvedValue([]),
-  summarise: jest.fn().mockResolvedValue([]),
-  elaborate: jest.fn().mockResolvedValue([]),
-  refineQuery: jest.fn().mockResolvedValue([]),
-  generateFollowUps: jest.fn().mockResolvedValue([]),
-  generateFollowUpQs: jest.fn().mockResolvedValue([]),
 }));
 
 import { QueryTextAreaProps } from "@/app/types";
@@ -51,9 +46,9 @@ const InvalidValueProps: QueryTextAreaProps = {
 
 const TestQueryTextArea = () => {
   return (
-    <AllProviders>
+    <Providers>
       <QueryTextArea {...TestQueryTextAreaProps} />
-    </AllProviders>
+    </Providers>
   );
 };
 
@@ -68,9 +63,9 @@ describe("Query text area renders correctly", () => {
 describe("Error handling", () => {
   it("Invalid characters triggers error", () => {
     render(
-      <AllProviders>
+      <Providers>
         <QueryTextArea {...InvalidValueProps} />
-      </AllProviders>,
+      </Providers>,
     );
     expect(InvalidValueProps.setError).toHaveBeenCalled();
     expect(InvalidValueProps.error).toBeTruthy();

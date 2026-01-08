@@ -2,19 +2,18 @@
 
 import { useEffect, useState } from "react";
 import {
-  Link,
   Paragraph,
   Feedback,
   FeedbackExpanded,
   SanitisedMarkdown,
   CountryCards,
+  SourceLink,
 } from "@/app/components";
-import { useResponsive, useSidebar, useLocation } from "@/app/providers";
+import { useResponsive, useLocation } from "@/app/providers";
 import { trimWhitespace, confirmChangeLocation } from "@/app/utils";
 import { ChatHistoryType } from "@/app/types";
 import { createAnswerMarkdownOptions } from "./AnswerMarkdownConfig";
 import styles from "./Answer.module.css";
-import { emitCitations } from "@/app/(pages)/chat/chat-helpers/emitCitations";
 
 type AnswerProps = {
   setLoadedChatHistory: Function;
@@ -43,32 +42,23 @@ export default function Answer({
   const [isMounted, setIsMounted] = useState(false);
   useEffect(() => setIsMounted(true), []);
 
-  const { toggleSidebar, isSidebarVisible } = useSidebar();
   const { isSmallScreen } = useResponsive();
   const answer = message.answer;
   const isError = message.type === "error" || answer === errorText;
-  const summarised = message.question === "Summarise";
-  const elaborated = message.question === "Elaborate";
   const isSourceLinks = message.citations && message.citations.length > 0;
-  const shouldShowAiStatement =
-    (isSourceLinks || summarised || elaborated) && !message.default_response;
-  const responseLength = `${summarised ? "a shorter" : elaborated ? "a more detailed" : "this"}`;
+  const isFirstMessage = message.type === "chooseCountry";
+  const showAIStatement = !isError && !isFirstMessage && isSourceLinks;
 
-  const aiStatement1 = `${shouldShowAiStatement ? `AI created ${responseLength} response which might help answer your question.` : ""}`;
-  const aiStatement2 = "Check the accuracy against the links suggested.";
+  const aiStatement =
+    "This AI summary may contain errors. Use the Universal Learning guidance links below to check it:";
 
   const options = createAnswerMarkdownOptions(styles);
-
-  const handleGuidanceLinkClick = () => {
-    toggleSidebar();
-    emitCitations(message.citations);
-  };
 
   return (
     <article
       data-testid="message-answer-container"
       onCopy={trimWhitespace}
-      tabIndex={isSidebarVisible && isSmallScreen ? -1 : 0}
+      tabIndex={isSmallScreen ? -1 : 0}
     >
       <Paragraph
         className={styles.message_label}
@@ -79,25 +69,32 @@ export default function Answer({
 
       {/* Markdown response */}
       <div className={styles.answer} data-testid="message-answer">
-        {!isError && shouldShowAiStatement && (
+        {showAIStatement && (
           <div className={styles.ai_disclaimer_span}>
             <strong
               className={styles.ai_disclaimer}
               data-testid="ai-answer-disclaimer"
             >
-              {`${aiStatement1} ${aiStatement2}`}
+              {aiStatement.split(". ")[0]}.{"\n"}
+            </strong>
+            <strong
+              className={styles.ai_disclaimer}
+              data-testid="ai-answer-disclaimer"
+            >
+              {aiStatement.split(". ")[1]}
             </strong>
           </div>
         )}
 
-        {!isError && isSourceLinks && (
-          <Link
-            tabIndex={isSidebarVisible ? -1 : 0}
-            className={styles.viewGuidanceLink}
-            onClick={handleGuidanceLinkClick}
+        {isSourceLinks && (
+          <div
+            data-testid="source-links"
+            className={styles.sourceLinksContainer}
           >
-            View the guidance links
-          </Link>
+            {message.citations?.map((citation, index) => (
+              <SourceLink key={index} source={citation} index={index} />
+            ))}
+          </div>
         )}
 
         <SanitisedMarkdown

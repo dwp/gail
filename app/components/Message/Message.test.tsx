@@ -19,15 +19,10 @@ beforeAll(() => {
 
 jest.mock("@/app/utils/api", () => ({
   sendQuery: jest.fn().mockResolvedValue([]),
-  summarise: jest.fn().mockResolvedValue([]),
-  elaborate: jest.fn().mockResolvedValue([]),
-  refineQuery: jest.fn().mockResolvedValue([]),
-  generateFollowUps: jest.fn().mockResolvedValue([]),
-  generateFollowUpQs: jest.fn().mockResolvedValue([]),
 }));
 
 import Message from "./Message";
-import AllProviders from "@/app/providers/AllProviders";
+import Providers from "@/app/providers/Providers";
 
 beforeEach(() => {
   jest.spyOn(console, "error").mockImplementation(jest.fn());
@@ -36,18 +31,16 @@ beforeEach(() => {
 const ChatHistoryType = {
   question: "Test question",
   answer: "Test answer",
-  refined: false,
-  generated: false,
 };
 
 const TestMessage = () => (
-  <AllProviders>
+  <Providers>
     <Message
       message={ChatHistoryType}
       setLoadedChatHistory={() => {}}
       setTyping={() => {}}
     />
-  </AllProviders>
+  </Providers>
 );
 
 describe("Message renders", () => {

@@ -7,6 +7,7 @@ import styles from "./Navbar.module.css";
 import NavbarClient from "./NavbarClient";
 import NavbarHydrator from "./NavbarHydrator";
 import NavbarAccordionClient from "./NavbarAccordionClient";
+import ChangeClaimantLocation from "../ChangeClaimantLocation/ChangeClaimantLocation";
 
 const NavbarRoutes = [
   {
@@ -30,7 +31,7 @@ const NavbarRoutes = [
 export default async function Navbar() {
   const headersList = await headers();
   const pathname = headersList.get("x-current-pathname") ?? "";
-  const isLandingPage = pathname === "/" || pathname === "/agreement";
+  const isLandingPage = pathname === "/";
 
   return (
     <div
@@ -42,13 +43,7 @@ export default async function Navbar() {
       <div className={styles.menuWrapper}>
         <NavbarAccordionClient menuId="navbar-menu" />
 
-        <div
-          id="navbar-menu"
-          className={styles.navbarMenu}
-          role="menu"
-          aria-hidden="true"
-          hidden
-        >
+        <div id="navbar-menu" className={styles.navbarMenu} role="menu">
           <nav className={styles.menuListNavbar}>
             {NavbarRoutes.map((r, i) => (
               <Link
@@ -56,10 +51,13 @@ export default async function Navbar() {
                 href={r.route}
                 className={styles.navbarLink}
                 data-testid={`navbar-link-${i}`}
+                role="menuitem"
               >
                 {r.label}
               </Link>
             ))}
+
+            <ChangeClaimantLocation className={styles.navbarLink} />
 
             {/* <div
               id="admin-view-wrapper"

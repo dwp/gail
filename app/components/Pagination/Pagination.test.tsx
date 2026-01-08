@@ -365,8 +365,6 @@ describe("Pagination Component", () => {
       const nextLink = screen.getByTestId("chat-history-next-link");
       fireEvent.click(nextLink, mockEvent);
 
-      // Each click should prevent default (though we can't directly test this with fireEvent)
-      // The important thing is that onPageChange is called correctly
       expect(mockOnPageChange).toHaveBeenCalledTimes(3);
     });
   });

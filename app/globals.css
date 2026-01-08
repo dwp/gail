@@ -29,3 +29,7 @@ html {
 .govuk-footer {
   border-top: 1px solid rgb(161, 172, 178) !important;
 }
+
+.govuk-label {
+  margin-bottom: 0 !important;
+}

@@ -7,6 +7,16 @@ jest.mock("../../Navbar/Navbar", () => {
   };
 });
 
+jest.mock("next/headers", () => {
+  return {
+    headers: jest.fn().mockReturnValue({
+      get: jest.fn().mockReturnValue({
+        value: "en",
+      }),
+    }),
+  };
+});
+
 import Header from "./Header";
 
 beforeEach(() => {

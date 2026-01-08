@@ -46,6 +46,14 @@ describe("Navbar server component", () => {
       }),
     );
 
+    jest.doMock("../../ChangeClaimantLocation/ChangeClaimantLocation", () => ({
+      __esModule: true,
+      default: () =>
+        React.createElement("div", {
+          "data-testid": "change-claimant-location",
+        }),
+    }));
+
     const { default: Navbar } = await import("../Navbar");
 
     // Navbar is an async server component function
@@ -92,6 +100,14 @@ describe("Navbar server component", () => {
           React.createElement("div", { "data-testid": "admin-view" }),
       }),
     );
+
+    jest.doMock("../../ChangeClaimantLocation/ChangeClaimantLocation", () => ({
+      __esModule: true,
+      default: () =>
+        React.createElement("div", {
+          "data-testid": "change-claimant-location",
+        }),
+    }));
 
     const { default: Navbar } = await import("../Navbar");
     const element = await Navbar();

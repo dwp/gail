@@ -30,16 +30,22 @@ export default function ChatInput({
 }) {
   const [query, setQuery] = useState("");
   const [error, setError] = useState<ErrorStateType>(initialErrorState);
-  const [counter, setCounter] = useState(1);
   const { location } = useLocation();
   const [localLocation, setLocalLocation] = useState("");
+  const [counter, setCounter] = useState(1);
 
   const isError = Object.values(error).includes(true);
   const onChange = (
     event?: React.ChangeEvent<HTMLTextAreaElement> | null,
     plainText?: string | null
   ) => {
-    setQuery(plainText ? plainText : event ? event.target.value : "");
+    setQuery(
+      plainText
+        ? plainText.replaceAll("[text here]", "")
+        : event
+          ? event.target.value
+          : ""
+    );
     setError((state) => ({ ...state, blank: false }));
   };
 

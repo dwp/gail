@@ -36,6 +36,15 @@ export default function LandingPage() {
     }
   };
 
+  const verifyPasswordOnEnter = (
+    event: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (event.key === "Enter" && event.shiftKey == false) {
+      event.preventDefault();
+      verifyPassword();
+    }
+  };
+
   return (
     <Main className="test-page-wrapper">
       <H1>Start the test</H1>
@@ -56,6 +65,7 @@ export default function LandingPage() {
       )}
 
       <input
+        onKeyDown={verifyPasswordOnEnter}
         type="password"
         aria-label="password"
         id="query-text-area"

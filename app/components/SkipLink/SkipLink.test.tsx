@@ -2,7 +2,7 @@ import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import SkipLink from "./SkipLink";
 import { usePathname } from "next/navigation";
-import AllProviders from "@/app/providers/AllProviders";
+import Providers from "@/app/providers/Providers";
 
 beforeAll(() => {
   Object.defineProperty(window, "matchMedia", {
@@ -31,9 +31,9 @@ beforeEach(() => {
 describe("SkipLink renders correctly", () => {
   it("SkipLink text renders correctly", () => {
     render(
-      <AllProviders>
+      <Providers>
         <SkipLink />
-      </AllProviders>,
+      </Providers>,
     );
     const skiplink = screen.getAllByTestId("skip-link");
     expect(skiplink[0]).toBeInTheDocument();
@@ -49,9 +49,9 @@ describe("SkipLink Component", () => {
     (usePathname as jest.Mock).mockReturnValue("/");
 
     render(
-      <AllProviders>
+      <Providers>
         <SkipLink />
-      </AllProviders>,
+      </Providers>,
     );
     const skiplink = screen.getAllByTestId("skip-link");
     expect(skiplink[0]).toBeInTheDocument();

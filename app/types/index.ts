@@ -30,9 +30,6 @@ type ChatHistoryType = {
   default_response?: boolean;
   feedback_given?: boolean;
   citations?: Citations;
-  refined: boolean;
-  generated: boolean;
-  followUpQs?: string[];
   type?: string;
   id?: number;
 };
@@ -48,9 +45,6 @@ type ChatViewType = {
   answer: string;
   citations?: Citations;
   previous_chat_history: ChatViewType;
-  refined: boolean;
-  generated: boolean;
-  followUpQs?: string[];
   type?: string;
   id?: number;
   feedback?: Feedback;
