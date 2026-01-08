@@ -3,20 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "dev:https": "nodemon httpsServer.js",
     "build": "next build",
-    "start": "node .next/standalone/server.js",
-    "lint": "eslint .",
-    "type-check": "tsc --noEmit",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
-    "test:notest": "jest --passWithNoTests",
-    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,md,mdx,css,scss,yaml,yml,json}\"",
-    "check": "prettier --check \"**/*.{ts,tsx,js,jsx,md,mdx,css,scss,yaml,yml,json}\"",
-    "prepare": "husky",
-    "localbuild": "docker build --no-cache --platform linux/amd64 -t dwpaskfe-local:latest ."
+    "start": "next start"
   },
   "dependencies": {
     "autoprefixer": "10.4.22",
