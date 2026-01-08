@@ -2,6 +2,10 @@
   "name": "a-cubed-new-frontend",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "22.21.1",
+    "npm": "10.9.4"
+  },
   "scripts": {
     "build": "next build",
     "start": "next start"
