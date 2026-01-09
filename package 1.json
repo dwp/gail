@@ -4,7 +4,7 @@
   "private": true,
   "engines": {
     "node": "22.21.1",
-    "npm": "10.9.4"
+    "npm": "11.6.2"
   },
   "scripts": {
     "build": "next build",
