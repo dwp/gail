@@ -34,6 +34,7 @@
   font-weight: 700 !important;
   text-decoration: none !important;
   font-size: 18px;
+  padding: 5px;
 }
 
 .navbarLink:hover {
@@ -69,6 +70,13 @@
   outline: 3px solid #ffdd00;
   outline-offset: 0;
   background-color: #ffdd00;
+  color: #1d70b8;
+}
+
+.navbarLink:focus {
+  color: #1d70b8 !important;
+  font-weight: bold !important;
+  text-decoration: underline !important;
 }
 
 .label {
