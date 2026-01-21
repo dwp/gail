@@ -49,6 +49,7 @@ import QuestionTemplates from "./Packages/QuestionTemplates/QuestionTemplates";
 import ChooseCountry from "./ChooseCountry/ChooseCountry";
 import CountryCards from "./ChooseCountry/CountryCards";
 import SourceLink from "./Packages/SourceLink/SourceLink";
+import Sidebar from "./Packages/Sidebar/Sidebar";
 
 export {
   ClearChatModal,
@@ -104,4 +105,5 @@ export {
   ChooseCountry,
   CountryCards,
   SourceLink,
+  Sidebar,
 };

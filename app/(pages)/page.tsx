@@ -9,7 +9,11 @@ import "./test.css";
 //   searchParams: Promise<{ code?: string }>;
 // };
 
-export default function LandingPage() {
+type LandingPageProps = {
+  source?: string;
+};
+
+export default function LandingPage({ source }: LandingPageProps) {
   const router = useRouter();
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -22,8 +26,11 @@ export default function LandingPage() {
 
   const verifyPassword = () => {
     try {
-      if (password === "test") {
-        router.push("/agreement");
+      const CORRECT_PASSWORD = password === "test";
+      if (CORRECT_PASSWORD) {
+        router.push(
+          source === "version-b" ? "/version-b/agreement" : "/agreement",
+        );
       }
 
       setError("Incorrect password. Please try again.");
@@ -37,7 +44,7 @@ export default function LandingPage() {
   };
 
   const verifyPasswordOnEnter = (
-    event: React.KeyboardEvent<HTMLInputElement>
+    event: React.KeyboardEvent<HTMLInputElement>,
   ) => {
     if (event.key === "Enter" && event.shiftKey == false) {
       event.preventDefault();

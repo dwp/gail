@@ -14,7 +14,7 @@ import LandingItem from "./LandingItem";
 import styles from "./Landing.module.css";
 import { clearHistory, clearLocation } from "@/app/utils";
 
-export default function Landing() {
+export default function Landing({ source }: { source?: string }) {
   const router = useRouter();
 
   /**
@@ -25,7 +25,7 @@ export default function Landing() {
   const startChat = () => {
     clearHistory();
     clearLocation();
-    router.push("/chat");
+    router.push(source === "version-b" ? "/version-b/chat" : "/chat");
   };
 
   return (

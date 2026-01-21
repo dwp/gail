@@ -37,3 +37,27 @@
   font-weight: 700 !important;
   width: 120px !important;
 }
+
+@media (max-width: 768px) {
+  .chatWindowInputButton {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .chatSend,
+  .newChatButton {
+    width: 150px !important;
+  }
+}
+
+@media (max-width: 464px) {
+  .queryTextAreaButtons {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .chatSend,
+  .newChatButton {
+    width: 100% !important;
+  }
+}

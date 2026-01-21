@@ -8,12 +8,15 @@ import {
   SanitisedMarkdown,
   CountryCards,
   SourceLink,
+  Link,
 } from "@/app/components";
-import { useResponsive, useLocation } from "@/app/providers";
+import { useResponsive, useSidebar, useLocation } from "@/app/providers";
 import { trimWhitespace, confirmChangeLocation } from "@/app/utils";
 import { ChatHistoryType } from "@/app/types";
 import { createAnswerMarkdownOptions } from "./AnswerMarkdownConfig";
+import { usePathname } from "next/navigation";
 import styles from "./Answer.module.css";
+import { emitCitations } from "@/app/(pages)/version-b/chat/emitCitations";
 
 type AnswerProps = {
   setLoadedChatHistory: Function;
@@ -35,8 +38,12 @@ export default function Answer({
   const [isFeedbackHelpful, setIsFeedbackHelpful] =
     useState<IsFeedbackHelpful>(null);
   const [feedbackCompleted, setFeedbackCompleted] = useState(
-    message.feedback_given || false
+    message.feedback_given || false,
   );
+
+  const pathname = usePathname();
+  const isVersionB = pathname?.includes("version-b");
+  const { toggleSidebar, isSidebarVisible } = useSidebar();
 
   const { location, setLocation } = useLocation();
   const [isMounted, setIsMounted] = useState(false);
@@ -53,6 +60,11 @@ export default function Answer({
     "This AI summary may contain errors. Use the Universal Learning guidance links below to check it:";
 
   const options = createAnswerMarkdownOptions(styles);
+
+  const handleGuidanceLinkClick = () => {
+    toggleSidebar();
+    emitCitations(message.citations);
+  };
 
   return (
     <article
@@ -86,7 +98,17 @@ export default function Answer({
           </div>
         )}
 
-        {isSourceLinks && (
+        {isVersionB && !isError && isSourceLinks && (
+          <Link
+            tabIndex={isSidebarVisible ? -1 : 0}
+            className={styles.viewGuidanceLink}
+            onClick={handleGuidanceLinkClick}
+          >
+            View the guidance links
+          </Link>
+        )}
+
+        {!isVersionB && isSourceLinks && (
           <div
             data-testid="source-links"
             className={styles.sourceLinksContainer}

@@ -1,14 +1,14 @@
 "use client";
 
 import { useRef, useEffect } from "react";
-import { useResponsive } from "@/app/providers";
-import { useModal } from "@/app/providers";
+import { useResponsive, useModal, useSidebar } from "@/app/providers";
 import {
   InputError,
   Button,
   QuestionTemplates,
   WarningText,
 } from "@/app/components";
+import { usePathname } from "next/navigation";
 import { TextAreaConfig } from "@/app/constants/QueryTextArea";
 import type { QueryTextAreaProps } from "@/app/types";
 import { loadHistory } from "@/app/utils";
@@ -30,7 +30,9 @@ export default function QueryTextArea({
   onKeyDown,
   sendQueryAndClear,
 }: QueryTextAreaProps) {
+  const pathname = usePathname();
   const { setModalVisible } = useModal();
+  const { isSidebarVisible } = useSidebar();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const isError = Object.values(error).includes(true);
 
@@ -61,7 +63,9 @@ export default function QueryTextArea({
   };
 
   const { isSmallScreen } = useResponsive();
-  const isDisabled = isModalOpen || isSmallScreen;
+  const isDisabled =
+    isModalOpen ||
+    (isSmallScreen && isSidebarVisible && pathname.includes("version-b"));
 
   return (
     <div

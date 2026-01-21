@@ -4,6 +4,7 @@ import { ResponsiveProvider } from "./ResponsiveProvider";
 import { ModalProvider } from "./ModalProvider";
 import LocationProvider from "./LocationProvider";
 import CitationsProvider from "./CitationsProvider";
+import SidebarProvider from "./SidebarProvider";
 
 type ProvidersProps = {
   children: React.ReactNode;
@@ -14,7 +15,9 @@ export default function Providers({ children }: ProvidersProps) {
     <ResponsiveProvider>
       <ModalProvider>
         <LocationProvider>
-          <CitationsProvider>{children}</CitationsProvider>
+          <SidebarProvider>
+            <CitationsProvider>{children}</CitationsProvider>
+          </SidebarProvider>
         </LocationProvider>
       </ModalProvider>
     </ResponsiveProvider>
