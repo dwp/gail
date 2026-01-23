@@ -18,7 +18,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="govuk-template__body govuk-frontend-supported">
-        {/* Google Tag Manager (noscript) HEROKU */}
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-53V37X4L"
@@ -27,7 +26,6 @@ export default function RootLayout({
             style={{ display: "none", visibility: "hidden" }}
           ></iframe>
         </noscript>
-        {/* End Google Tag Manager (noscript) HEROKU */}
         <Providers>
           <SkipLink />
           <Layout>{children}</Layout>
