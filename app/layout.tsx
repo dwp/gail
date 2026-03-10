@@ -1,35 +1,27 @@
-import type { Metadata } from "next";
-import Script from "next/script";
-import { SkipLink, Layout } from "./components";
-import Providers from "./providers/Providers";
-import "./globals.css";
-import "./index.scss";
+import { SkipLink, TopNavBar, PhaseBanner, ContentFooter, GlobalStyle } from '@/components';
+import 'govuk-frontend/dist/govuk/all.scss';
+import './custom.css';
 
-export const metadata: Metadata = {
-  title: "DWP Ask",
-  description: "DWP Ask",
-};
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="govuk-template__body govuk-frontend-supported">
-        <noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-53V37X4L"
-            height="0"
-            width="0"
-            style={{ display: "none", visibility: "hidden" }}
-          ></iframe>
-        </noscript>
-        <Providers>
-          <SkipLink />
-          <Layout>{children}</Layout>
-        </Providers>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico" />
+      </head>
+      <body>
+        <SkipLink />
+        <GlobalStyle />
+        <div>
+          <TopNavBar />
+          <div className="govuk-width-container">
+            <PhaseBanner />
+            <main className="govuk-main-wrapper" id="main-content">
+              {children}
+            </main>
+          </div>
+        </div>
+        <ContentFooter />
       </body>
     </html>
   );

@@ -1,0 +1,13 @@
+.govuk-input,
+.govuk-textarea {
+  border-width: 2px !important;
+  border-color: #0b0c0c !important;
+}
+
+.govuk-checkboxes__input[type="checkbox"] {
+  box-shadow: 0 0 0 2px #0b0c0c !important;
+}
+
+.govuk-checkboxes__input[type="checkbox"]:focus {
+  box-shadow: 0 0 0 4px #0b0c0c, 0 0 0 4px #ffdd00 !important;
+}

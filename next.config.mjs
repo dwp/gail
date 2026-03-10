@@ -17,6 +17,8 @@ const cspHeader = `
 const nextConfig = {
   output: "standalone",
   reactStrictMode: false,
+  compress: true,
+  poweredByHeader: false,
   sassOptions: {
     quietDeps: true,
     silenceDeprecations: ["legacy-js-api", "import"],
